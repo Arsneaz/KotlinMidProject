@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">F1 Information</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <!--Activity Login-->
+    <string name="title_login">Login</string>
+    <string name="login_label_username">Username</string>
+    <string name="login_label_password">Password</string>
+    <string name="btn_submit">Login</string>
+    <string name="btn_register">Register</string>
+
+    <!--Register Login-->
+    <string name="title_register">Register</string>
+    <string name="desc_title">Join our Community Now.</string>
+    <string name="register_label_username">Username</string>
+    <string name="register_label_password">Password</string>
+    <string name="register_label_github">Github Username</string>
+    <string name="register_label_nik">NIK (Nomor Induk Kependudukan)</string>
+    <string name="register_label_email">E-Mail</string>
+
+    <!--Main Page-->
+    <string name="action_search">Search</string>
+</resources>

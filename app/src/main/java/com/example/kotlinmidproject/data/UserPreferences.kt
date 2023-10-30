@@ -39,11 +39,7 @@ class UserPreferences(context: Context) {
 
     // I guess there's some way to use NIK as the key for the list. But I guess i'm to lazy to do that lmao
     companion object{
-//        val USERNAME_KEY = stringPreferencesKey("USERNAME_KEY")
-//        val PASSWORD_KEY = stringPreferencesKey("PASSWORD_KEY")
-//        val GITHUB_KEY = stringPreferencesKey("GITHUB_KEY")
-//        val NIK_KEY = stringPreferencesKey("NIK_KEY")
-//        val EMAIL_KEY = stringPreferencesKey("EMAIL_KEY")
+        val GET_USERNAME = stringPreferencesKey("GET_USERNAME")
         val IS_LOGGED_IN = booleanPreferencesKey("IS_LOGGED_IN")
     }
 
@@ -53,6 +49,24 @@ class UserPreferences(context: Context) {
         }
     }
 
+    suspend fun setUsername(username: String) {
+        dataSource.edit {pref ->
+            pref[GET_USERNAME] = username
+        }
+    }
+
+    fun getUsername() : Flow<String> {
+        return dataSource.data.catch { exception ->
+            if (exception is IOException) {
+                emit(emptyPreferences())
+            } else {
+                throw exception
+            }
+        }.map { pref ->
+            val username = pref[GET_USERNAME] ?: ""
+            username
+        }
+    }
     fun getStatus() : Flow<Boolean> {
         return dataSource.data.catch { exception ->
             if (exception is IOException) {
@@ -65,15 +79,6 @@ class UserPreferences(context: Context) {
             loggedStatus
         }
     }
-//    suspend fun saveUserCredentials(username: String, password: String, github: String, nik: String, email: String) {
-//        dataSource.edit {pref ->
-//            pref[USERNAME_KEY] = username
-//            pref[PASSWORD_KEY] = password
-//            pref[GITHUB_KEY] = github
-//            pref[NIK_KEY] = email
-//            pref[EMAIL_KEY] = nik
-//        }
-//    }
 
     private fun getUsernameKey(username: String): Preferences.Key<String> {
         return stringPreferencesKey("username_$username")

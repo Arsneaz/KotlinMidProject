@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
-import com.example.kotlinmidproject.data.UserPreferences
 import com.example.kotlinmidproject.databinding.ActivityLoginBinding
 import kotlinx.coroutines.launch
 
@@ -35,6 +34,7 @@ class LoginActivity : AppCompatActivity() {
             Log.d(userData.username.toString(), "datastore username")
             if (inputUsername == userData.username && inputPassword == userData.password) {
                 userPreferences.setLoggedIn(true)
+                userPreferences.setUsername(inputUsername)
                 Log.d(userPreferences.getStatus().asLiveData().toString(), "check status")
                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                 startActivity(intent)

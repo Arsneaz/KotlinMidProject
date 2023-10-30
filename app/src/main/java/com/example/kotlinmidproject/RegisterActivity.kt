@@ -7,7 +7,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.lifecycleScope
-import com.example.kotlinmidproject.data.UserPreferences
 import com.example.kotlinmidproject.databinding.ActivityRegisterBinding
 import kotlinx.coroutines.launch
 
@@ -33,25 +32,28 @@ class RegisterActivity : AppCompatActivity() {
             val inputGithub = binding.githubText.text.toString()
             val inputNik = binding.nikText.text.toString()
 
-            // Is is supposed to be using ViewModel KekW. I'm lmao ayaya...
-            lifecycleScope.launch {
-                userPreferences.saveUserCredentials(
-                    username = inputUsername,
-                    password = inputPassword,
-                    github = inputGithub,
-                    nik = inputNik,
-                    email = inputEmail
-                )
+            if (inputUsername.isEmpty() || inputPassword.isEmpty() || inputNik.isEmpty() || inputGithub.isEmpty() || inputEmail.isEmpty()) {
+                Toast.makeText(this, "Invalid register field, pls try again", Toast.LENGTH_SHORT).show()
+            } else {
+                // Is is supposed to be using ViewModel KekW. I'm lmao ayaya...
+                lifecycleScope.launch {
+                    userPreferences.saveUserCredentials(
+                        username = inputUsername,
+                        password = inputPassword,
+                        github = inputGithub,
+                        nik = inputNik,
+                        email = inputEmail
+                    )
+                }
+
+                // Redirecting to Login Activity
+                Toast.makeText(this, "Sucessfully created an accout", Toast.LENGTH_SHORT).show()
+
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
             }
-
-            // Redirecting to Login Activity
-            Toast.makeText(this, "Sucessfully created an accout", Toast.LENGTH_SHORT).show()
-
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
         }
-
     }
 
     fun checkInput(){
